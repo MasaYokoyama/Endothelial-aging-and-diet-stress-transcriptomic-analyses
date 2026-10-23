@@ -1,4 +1,4 @@
-# Endothelial aging transcriptomic analyses
+# Endothelial aging and metabolic stress transcriptomic analyses
 
 This repository contains custom code used for the transcriptomic analyses described in the manuscript:
 
