@@ -25,6 +25,7 @@ library(VennDiagram)
 library(ggridges)
 library(ggrepel)
 library(igraph)
+library(harmony)  # v1.2.4
  
 ############################################################
 # 0. Utility functions shared across figures
@@ -167,6 +168,48 @@ calculate_signature_score <- function(count_matrix, gene_list) {
 ############################################################
 ```
 
+
+## Harmony correction used for vascular endothelial-cell subclustering
+
+```r
+# Final Harmony setting used for vascular endothelial-cell subclustering.
+# Object names are generalized for publication.
+# Input: an SCT-normalized vascular endothelial-cell Seurat object with a
+# precomputed PCA reduction named "pca_original".
+#
+# Sample was used as the batch variable. The final analysis used dimensions
+# 1–30, theta = 0.01, and lambda = 50.
+
+vascular_ec <- harmony::RunHarmony(
+  object         = vascular_ec,
+  group.by.vars  = "Sample",
+  reduction.use  = "pca_original",
+  dims.use       = 1:30,
+  theta          = 0.01,
+  lambda         = 50,
+  reduction.save = "harmony",
+  verbose        = TRUE
+)
+
+# Downstream dimensional reduction and graph construction were performed in
+# the Harmony-corrected space using the same 30 dimensions.
+vascular_ec <- RunUMAP(
+  vascular_ec,
+  reduction      = "harmony",
+  dims           = 1:30,
+  reduction.name = "umap_harmony"
+)
+
+vascular_ec <- FindNeighbors(
+  vascular_ec,
+  reduction = "harmony",
+  dims      = 1:30
+)
+
+# Final cluster identities used in the manuscript were derived from this
+# Harmony-corrected neighbor graph. Trial Harmony parameter settings are not
+# included here.
+```
 
 ## 2. Tissue-specific endothelial signatures and regulon inference
 
