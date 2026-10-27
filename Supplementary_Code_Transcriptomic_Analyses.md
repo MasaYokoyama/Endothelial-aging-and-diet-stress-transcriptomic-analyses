@@ -339,6 +339,9 @@ seurat_capillary <- readRDS(
   "/path/to/CapillarySinusoidal_subset_SeuratV5.rds"
 )
  
+# The SCT count matrix was used to maintain consistency with the SCT-based
+# preprocessing framework used for dimensional reduction, clustering, and
+# downstream endothelial-cell analyses.
 exprMat <- seurat_capillary@assays$SCT@counts
 exprMat <- as.matrix(exprMat)
  
@@ -388,14 +391,16 @@ genesKept <- geneFiltering(
 exprMat_filtered <- exprMat[genesKept, ]
 exprMat_filtered <- log2(exprMat_filtered + 1)
  
+scenicOptions@settings$verbose <- TRUE
+scenicOptions@settings$nCores  <- 10
+# The default SCENIC seed value (123) was retained unchanged.
+# It is shown explicitly here only to document the setting used.
+scenicOptions@settings$seed    <- 123
+ 
 runGenie3(exprMat_filtered, scenicOptions, nTrees = 500)
  
 # Reload (typical SCENIC workflow)
 # scenicOptions <- readRDS("int/scenicOptions.Rds")
- 
-scenicOptions@settings$verbose <- TRUE
-scenicOptions@settings$nCores  <- 10
-scenicOptions@settings$seed    <- 123
  
 scenicOptions <- runSCENIC_1_coexNetwork2modules(scenicOptions)
 scenicOptions <- runSCENIC_2_createRegulons(scenicOptions)
@@ -639,10 +644,13 @@ seurat_all <- AddMetaData(seurat_all, sig3, "Aging_3")
 sig4 <- calculate_signature_score(normalized_matrix, List_4)
 seurat_all <- AddMetaData(seurat_all, sig4, "Aging_4")
  
+# Signature-score columns displayed in the DotPlot.
+Lists <- c("Aging_1", "Aging_2", "Aging_3", "Aging_4")
+ 
 # DotPlot grouped by 'Type'
 DotPlot(
   seurat_all,
-  features = Lists,     # vector of signature columns or marker genes
+  features = Lists,
   group.by = "Type",
   cols     = c("purple4", "orange")
 ) +
@@ -697,21 +705,133 @@ adipose_outs <- list(
 # as h5ad files, including Tabula Muris Senis heart, adipose tissue,
 # and gonadal fat pad datasets. Cell category columns were converted to strings
 # before conversion/merging into Seurat objects.
- 
+
 # Heart reference:
 #   Tabula Muris Senis heart dataset + present-study heart single-cell RNA-seq dataset
 #   -> normalization/integration
 #   -> RCTD reference object used by spacexr
 reference_rctd_heart <- readRDS("reference_rctd_heart.rds")
- 
-# Adipose reference:
-#   Tabula Muris Senis adipose tissue and gonadal fat pad datasets
-#   + previously analyzed adipose single-nucleus RNA-seq dataset
-#     deposited under BioProject accession PRJDB17809
-#   -> normalization/integration
-#   -> Seurat reference object used for anchor-based label transfer
+
+# Adipose reference inputs:
+#   obj_wt      : previously analyzed adipose single-nucleus RNA-seq dataset
+#                 deposited under BioProject accession PRJDB17809
+#   seu_ageing  : Tabula Muris Senis adipose tissue reference
+#   seu_gonadal : Tabula Muris Senis gonadal fat pad reference
+#
+# The public h5ad-derived RNA count matrices were converted to integer-like
+# count matrices before Seurat reference construction.
+counts_ageing <- round(GetAssayData(seu_ageing, assay = "RNA", layer = "counts"))
+seu_ageing[["RNA"]] <- CreateAssayObject(counts = counts_ageing)
+
+counts_gonadal <- round(GetAssayData(seu_gonadal, assay = "RNA", layer = "counts"))
+seu_gonadal[["RNA"]] <- CreateAssayObject(counts = counts_gonadal)
+
+# Harmonize source and cell-type metadata before merging.
+obj_wt$sample      <- "snRNAseq"
+seu_ageing$sample  <- "ageing10x"
+seu_gonadal$sample <- "gonadal10x"
+
+obj_wt$ref_celltype      <- as.character(obj_wt$celltype)
+seu_ageing$ref_celltype  <- as.character(seu_ageing$cell_type)
+seu_gonadal$ref_celltype <- as.character(seu_gonadal$cell_type)
+
+DefaultAssay(obj_wt)      <- "RNA"
+DefaultAssay(seu_ageing)  <- "RNA"
+DefaultAssay(seu_gonadal) <- "RNA"
+
+# Merge the three adipose reference datasets, normalize with SCTransform,
+# and correct source-associated variation with Harmony.
+merged_obj <- merge(
+  x = obj_wt,
+  y = list(seu_ageing, seu_gonadal),
+  add.cell.ids = c("snRNAseq", "ageing10x", "gonadal10x"),
+  project = "Adipose_ref_merged"
+)
+
+merged_obj <- SCTransform(
+  merged_obj,
+  method = "glmGamPoi",
+  vars.to.regress = NULL,
+  verbose = TRUE
+)
+merged_obj <- RunPCA(merged_obj, verbose = FALSE)
+merged_obj <- RunHarmony(
+  merged_obj,
+  group.by.vars = "sample",
+  verbose = TRUE
+)
+merged_obj <- RunUMAP(
+  merged_obj,
+  reduction = "harmony",
+  dims = 1:30
+)
+merged_obj <- FindNeighbors(
+  merged_obj,
+  reduction = "harmony",
+  dims = 1:30
+)
+merged_obj <- FindClusters(
+  merged_obj,
+  resolution = 0.5
+)
+
+# For final reference-label curation, the Harmony reduction was also examined
+# using dimensions 1-20, with a dedicated neighbor graph and clustering.
+dims_use <- 1:20
+merged_obj <- RunUMAP(
+  merged_obj,
+  reduction = "harmony",
+  dims = dims_use,
+  reduction.name = "umap_harmony20"
+)
+merged_obj <- FindNeighbors(
+  merged_obj,
+  reduction = "harmony",
+  dims = dims_use,
+  graph.name = "harmony20_snn"
+)
+merged_obj <- FindClusters(
+  merged_obj,
+  graph.name = "harmony20_snn",
+  resolution = 0.5,
+  algorithm = 1
+)
+
+# Reference labels were reviewed using canonical marker expression and
+# harmonized into the Cellname categories used for spatial label transfer.
+merged_obj$Cellname <- merged_obj$ref_celltype
+merged_obj$Cellname[merged_obj$seurat_clusters == "14"] <- "Neutrophil"
+
+celltype_map <- c(
+  "Adipocyte" = "Adipocyte",
+  "ASC" = "Adipose stromal cell",
+  "B cell" = "B cell",
+  "CD4-positive, alpha-beta T cell" = "T cell",
+  "CD8-positive, alpha-beta T cell" = "T cell",
+  "endothelial cell" = "Endothelial cell",
+  "Endothelial cell" = "Endothelial cell",
+  "Epididymal cell" = "Adjacent parenchymal cells",
+  "epithelial cell" = "Epithelial cell",
+  "erythroblast" = "Erythroid cell",
+  "Hematopoietic cell" = "Macrophage/Monocyte/DC",
+  "lymphocyte" = "T cell",
+  "mesenchymal stem cell of adipose tissue" = "Adipose stromal cell",
+  "Mesothelial cell" = "Mesothelial cell",
+  "myeloid cell" = "Macrophage/Monocyte/DC",
+  "natural killer cell" = "NK cell",
+  "Prostate cell" = "Adjacent parenchymal cells",
+  "T cell" = "T cell",
+  "VSMC" = "VSMC"
+)
+
+idx_other <- merged_obj$seurat_clusters != "14"
+merged_obj$Cellname[idx_other] <-
+  unname(celltype_map[merged_obj$ref_celltype[idx_other]])
+
+# Save the final curated reference used for anchor-based label transfer.
+saveRDS(merged_obj, file = "adipose_merged_obj_reference.rds")
 adipose_reference <- readRDS("adipose_merged_obj_reference.rds")
- 
+
 # The heart reference was passed to create.RCTD()/run.RCTD().
 # The adipose reference was passed to FindTransferAnchors()/TransferData().
 ```
@@ -778,6 +898,9 @@ saveRDS(heart, "heart_mergeobj_preProject_full_sketchHarmony.rds")
 
 
 ```r
+# For the Seurat object used for visualization and marker-based annotation,
+# Ensembl identifiers were renamed to MGI gene symbols using biomaRt.
+# Unmapped Ensembl identifiers were retained.
 convert_ensembl_to_symbol <- function(seurat_obj, assay = "RNA") {
   library(biomaRt)
   mart <- useMart("ensembl", dataset = "mmusculus_gene_ensembl")
@@ -837,6 +960,11 @@ run_rctd_one_heart <- function(sample, pos_path, nCount_cutoff = 30) {
   rownames(coords_sample) <- cells
  
   counts_use <- counts[, cells, drop = FALSE]
+
+  # RCTD input was constructed independently from the raw count matrix.
+  # Here Ensembl IDs were mapped with org.Mm.eg.db, and counts mapping to the
+  # same gene symbol were summed before SpatialRNA object construction.
+  # This serves a different purpose from the biomaRt-based renaming above.
   ens_keys <- unique(rownames(counts_use))
   map_df <- AnnotationDbi::select(org.Mm.eg.db, keys = ens_keys, keytype = "ENSEMBL",
                                   columns = "SYMBOL")
@@ -1117,14 +1245,20 @@ gene_list <- c(
   "Rsad2", "Ifit3b", "Rtp4"
 )
  
-# Heart: score and 100-um neighborhood in LV ROI
+# Aging_1 scores were evaluated within each spatial data representation rather
+# than interpreted on a common absolute scale across tissues. Heart data were
+# analyzed as fixed 8-um bins, whereas adipose data were analyzed as segmented
+# cells. Tissue-specific thresholds were selected to delineate spatially
+# restricted Aging_1-high foci clearly from surrounding spatial units.
+ 
+# Heart: score and 100-um neighborhood in LV ROI (8-um bins)
 library(RANN)
 heart_roi <- readRDS("rds_out/Heart_Aged_1_LV_ROI_norm.rds")
 DefaultAssay(heart_roi) <- "Spatial.008um"
 gene_use <- intersect(gene_list, rownames(heart_roi))
 heart_roi <- AddModuleScore(heart_roi, features = list(gene_use), name = "Aging_1_Score")
  
-thr <- 0.3
+thr <- 0.3  # threshold used to delineate spatially restricted Aging_1-high bins
 radius_um <- 100
 bin_um <- 8
 score_col <- "Aging_1_Score1"
@@ -1145,12 +1279,12 @@ heart_roi$Aging1_nbhd100um <- factor(heart_roi$Aging1_nbhd100um,
                                      levels = c("other", "neighbor", "seed"))
 saveRDS(heart_roi, "rds_out/Heart_Aged_1_LV_ROI_norm_Aging1Score.rds")
  
-# Adipose: score and 100-um neighborhood by segmentation centroids
+# Adipose: score and 100-um neighborhood by segmentation centroids (segmented cells)
 adipose_a1 <- readRDS("Adipose_Aged_1_visiumHDsementation_ASSIGNEDonly_withXY.rds")
 DefaultAssay(adipose_a1) <- "SCT"
 adipose_a1 <- AddModuleScore(adipose_a1, features = list(gene_list), name = "Aging_1_Score")
  
-thr <- 0.05
+thr <- 0.05  # threshold used to delineate spatially restricted Aging_1-high cells
 radius_um <- 100
 seed_cells <- colnames(adipose_a1)[adipose_a1@meta.data[[score_col]] >= thr]
 md <- adipose_a1@meta.data
@@ -1449,17 +1583,21 @@ seurat_adipose_tmp <- seurat_adipose
 normalized_matrix_ifn <- as.data.frame(seurat_adipose_tmp[["RNA"]]@data)
  
 genes.score <- calculate_signature_score(normalized_matrix_ifn, IFN_genes)
-seurat_adipose_tmp <- AddMetaData(seurat_adipose_tmp, genes.score, "IFN_score")
+ 
+# Store the named score vector in Seurat metadata before subsetting by
+# vascular subtype. This preserves cell-to-score alignment for downstream
+# Vessel_Type-specific Welch t tests.
+seurat_adipose_tmp <- AddMetaData(seurat_adipose_tmp, genes.score, "genes.score")
  
 plot_data <- as.data.frame(seurat_adipose_tmp@meta.data)
-plot_data$IFN_score <- genes.score[rownames(plot_data)]
+plot_data$genes.score <- genes.score[rownames(plot_data)]
  
 # Reverse Condition order for plotting
 unique_condition <- unique(plot_data$Condition)
 plot_data$Condition <- factor(plot_data$Condition, levels = rev(unique_condition))
  
 options(repr.plot.width = 6, repr.plot.height = 5)
-ggplot(plot_data, aes(x = IFN_score, y = Vessel_Type, fill = Condition)) +
+ggplot(plot_data, aes(x = genes.score, y = Vessel_Type, fill = Condition)) +
   geom_density_ridges(alpha = 0.2, scale = 1) +
   scale_fill_viridis_d(direction = -1) +
   geom_point(aes(color = Condition),
@@ -1481,7 +1619,9 @@ ggplot(plot_data, aes(x = IFN_score, y = Vessel_Type, fill = Condition)) +
   ) +
   labs(y = "Vessel_Type", x = "IFN Signature Score")
  
-# t-test per Vessel_Type (Condition groups)
+# Welch t-test per Vessel_Type (Condition groups).
+# Because genes.score is a metadata column, subsetting by Vessel_Type preserves
+# the corresponding score and Condition for each cell.
 t_test_results <- lapply(unique(seurat_adipose_tmp@meta.data$Vessel_Type), function(category) {
   subset_data <- subset(seurat_adipose_tmp@meta.data, Vessel_Type == category)
   t_test_result <- t.test(genes.score ~ Condition, data = subset_data)
