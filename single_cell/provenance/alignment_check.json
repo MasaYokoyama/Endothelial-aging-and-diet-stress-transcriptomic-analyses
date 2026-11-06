@@ -1,0 +1,6 @@
+{
+  "check": "synthetic_alignment_and_ranking",
+  "exit_code": 0,
+  "stdout": "PASS: shuffled cell alignment, positive-only Pearson ranking, Spearman signs, cell mismatch rejection\n",
+  "stderr": "During startup - Warning messages:\n1: Setting LC_CTYPE failed, using \"C\" \n2: Setting LC_COLLATE failed, using \"C\" \n3: Setting LC_TIME failed, using \"C\" \n4: Setting LC_MESSAGES failed, using \"C\" \n5: Setting LC_MONETARY failed, using \"C\" \n"
+}

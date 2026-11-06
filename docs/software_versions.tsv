@@ -1,0 +1,18 @@
+software	version	scope	evidence
+CellRanger	4.0.0	single-cell	Main_manuscript_Yokoyama_Submission_261104 Methods
+CellBender	0.3.2	single-cell	Main_manuscript_Yokoyama_Submission_261104 Methods
+Seurat	5.0.3	single-cell and Visium	Main_manuscript_Yokoyama_Submission_261104 Methods
+Harmony	1.2.4	integration	Main_manuscript_Yokoyama_Submission_261104 Methods
+SCENIC	1.3.1	regulon inference	Main_manuscript_Yokoyama_Submission_261104 Methods
+RcisTarget	1.29.0	regulon inference	Main_manuscript_Yokoyama_Submission_261104 Methods
+UCell	2.3.0	pathway scoring	Main_manuscript_Yokoyama_Submission_261104 Methods
+CellChat	1.6.1	single-cell communication	Main_manuscript_Yokoyama_Submission_261104 Methods
+ggplot2	3.5.1	visualization	Main_manuscript_Yokoyama_Submission_261104 Methods
+igraph	1.5.0	network	Main_manuscript_Yokoyama_Submission_261104 Methods
+Space Ranger	4.0.1	Visium	Main_manuscript_Yokoyama_Submission_261104 Methods
+BPCells	0.3.1	Visium	Main_manuscript_Yokoyama_Submission_261104 Methods
+LIANA	1.7.1	Visium communication	Main_manuscript_Yokoyama_Submission_261104 Methods
+Xenium instrument	4.0.1.4	Xenium	Main_manuscript_Yokoyama_Submission_261104 Methods
+Xenium analysis	4.0.1.0	Xenium	Main_manuscript_Yokoyama_Submission_261104 Methods
+Xenium Explorer	4.1.1	Xenium	Main_manuscript_Yokoyama_Submission_261104 Methods
+R	4.2.1	bulk RNA-seq only	Main_manuscript_Yokoyama_Submission_261104 Methods

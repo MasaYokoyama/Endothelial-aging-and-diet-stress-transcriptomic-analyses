@@ -1,0 +1,6 @@
+{
+  "check": "R syntax parse only",
+  "exit_code": 0,
+  "stdout": "PARSED cellchat_workflow.R \nPARSED gene_filter_audit.R \nPARSED junb_gene_degs.R \nPARSED regulon_pathway_associations.R \nPARSED scenic_workflow.R \nPARSED signature_scores.R \nPARSED check_alignment.R \nPARSED plot_fig4j_regulators.R \nPARSED run_aging_signatures.R \nPARSED run_cellchat.R \nPARSED run_ifn_scores.R \nPARSED run_junb_gene_degs.R \nPARSED run_pathway_correlations.R \nPARSED run_scenic.R \nPARSED adipose_reactome_network.R \nPARSED aging_signature_derivation.R \nPARSED four_group_regulon_dotplot.R \n",
+  "stderr": "During startup - Warning messages:\n1: Setting LC_CTYPE failed, using \"C\" \n2: Setting LC_COLLATE failed, using \"C\" \n3: Setting LC_TIME failed, using \"C\" \n4: Setting LC_MESSAGES failed, using \"C\" \n5: Setting LC_MONETARY failed, using \"C\" \n"
+}

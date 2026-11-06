@@ -1,0 +1,20 @@
+# Run from single_cell/: Rscript scripts/run_aging_signatures.R INPUT_RDS OUTPUT_DIR
+args <- commandArgs(trailingOnly = TRUE)
+stopifnot(length(args) == 2L)
+suppressPackageStartupMessages(library(Seurat))
+source("R/signature_scores.R")
+dir.create(args[2], recursive = TRUE, showWarnings = FALSE)
+obj <- readRDS(args[1])
+sets <- read.delim("data/gene_sets.tsv", stringsAsFactors = FALSE)
+sets <- split(sets$gene, sets$signature)
+mat <- GetAssayData(obj, assay = "SCT", slot = "data")
+Lists <- paste0("Aging_", 1:4)
+for (name in Lists) {
+  score <- calculate_signature_score(mat, sets[[name]])
+  obj <- AddMetaData(obj, metadata = score[colnames(obj)], col.name = name)
+}
+saveRDS(obj, file.path(args[2], "seurat_with_aging_signatures.rds"))
+pdf(file.path(args[2], "Aging_signature_DotPlot.pdf"), width = 6, height = 4)
+print(DotPlot(obj, features = Lists, group.by = "Type", cols = c("purple4", "orange")))
+dev.off()
+writeLines(capture.output(sessionInfo()), file.path(args[2], "sessionInfo.txt"))

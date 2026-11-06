@@ -1,22 +1,24 @@
-# Endothelial aging and metabolic stress transcriptomic analyses
+# Supplementary code for transcriptomic analyses
 
-This repository contains custom code used for the transcriptomic analyses described in the manuscript:
+Generalized analysis code and executable workflows accompanying the Nature Aging
+manuscript. Methods follow the author-designated latest manuscript dated 4 November 2026.
 
-**Organ-resolved endothelial regulatory programs link aging and metabolic overload to vascular immune remodeling**
+| Analysis | Folder | Main entry points |
+|---|---|---|
+| Single-cell RNA-seq and regulons | `single_cell/` | SCENIC, signature scores, pathway correlations, CellChat, Junb and Figure 4j |
+| Visium HD | `visium_hd/` | Spatial neighborhoods, LIANA, preprocessing and annotation |
+| Xenium | `xenium/` | Bst2–Pira2 proximity for Heart, Muscle and Adipose |
+| Gene annotation comparison | `validation/mapping_rctd/` | Mapping tables, paired RCTD runs and agreement summaries |
 
-The code includes analyses of single-cell RNA-seq, transcriptional regulatory programs, cell–cell communication, spatial transcriptomics, and Xenium in situ gene expression data.
+`Supplementary_Code_Transcriptomic_Analyses.md` presents the generalized workflow.
+Each folder's README provides its commands and input specifications. Repeated analyses
+use shared functions with organ/sample settings in configuration tables.
 
-The corresponding omics datasets have been deposited in the DDBJ Genomic Expression Archive. Reviewer access information has been provided separately to the editors of Nature Aging.
+Set input paths to the analysis computer's data locations and use a separate output
+directory. For Seurat objects backed by BPCells, keep the associated matrix directories
+accessible. Software versions described in Methods are listed in
+`docs/software_versions.tsv`; execution scripts record the actual session used.
 
-The analysis code is provided in:
-
-`Supplementary_Code_Transcriptomic_Analyses.md`
-
-## Usage
-
-The repository contains analysis code organized by analysis step in
-`Supplementary_Code_Transcriptomic_Analyses.md`.
-
-Object names and file paths have been generalized for publication.
-Users should replace these with the corresponding local paths and input objects
-before running the relevant code sections.
+Small gene-set, regulator-summary and spatial annotation tables are included. Large
+Seurat objects, raw expression matrices and cisTarget databases are supplied through
+input paths. Source notebook and cell references accompany the analysis modules.

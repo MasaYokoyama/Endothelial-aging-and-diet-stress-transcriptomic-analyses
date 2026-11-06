@@ -2,8 +2,15 @@
 
 (Object names and paths generalized for publication)
 
-Organization: single-cell RNA-seq/regulon analyses, Visium HD spatial transcriptomics analyses, and other RNA-seq-related/transcriptome analyses. Headings were standardized by analysis step.
+This supplement describes single-cell RNA-seq/regulon, Visium HD, transcriptome,
+and Xenium analyses. Detailed scripts, sample settings, gene sets, and input
+specifications accompany the code in `single_cell/`, `visium_hd/`, and `xenium/`.
+Commands for gene-ID mapping comparison and paired RCTD analysis are provided in
+`validation/mapping_rctd/`. Software versions stated in the latest manuscript are
+listed in `docs/software_versions.tsv`.
 
+Code blocks are organized by analysis step. Supply the stated input objects and
+set paths for the analysis computer; each detailed folder contains execution commands.
 
 # Part I. Single-cell RNA-seq and regulon analyses
 
@@ -31,7 +38,12 @@ library(harmony)  # v1.2.4
 # 0. Utility functions shared across figures
 ############################################################
  
-## 0-1. Gene filtering for removing pseudogenes and background noise 
+## 0-1. Gene-name filter used in the source analysis
+# This reproduces the original, case-sensitive, unanchored regular expression.
+# It is a heuristic exclusion list, not a gene-biotype annotation. Patterns can
+# match within symbols and can remove functional genes (e.g. H2-, B2m, Actb).
+# Audit the actual excluded symbols for the input matrix with
+# single_cell/R/gene_filter_audit.R. No replacement regex is silently applied. 
 gene_filter_pattern <- paste(
   "mt-", "MT-", "MMU", "SNO", "Gm", "Rn6", "RNA", "7SK",
   "SNORD", "SNORA", "SCARNA", "B3g", "Vmn", "Mir", "Rik",
@@ -342,6 +354,8 @@ seurat_capillary <- readRDS(
 # The SCT count matrix was used to maintain consistency with the SCT-based
 # preprocessing framework used for dimensional reduction, clustering, and
 # downstream endothelial-cell analyses.
+# SCT counts are sequencing-depth-corrected UMI counts. They are neither
+# Pearson residuals (scale.data) nor Harmony-corrected expression values.
 exprMat <- seurat_capillary@assays$SCT@counts
 exprMat <- as.matrix(exprMat)
  
@@ -389,6 +403,8 @@ genesKept <- geneFiltering(
 )
  
 exprMat_filtered <- exprMat[genesKept, ]
+# The source SCENIC workflow computes the correlation network before log2.
+runCorrelation(exprMat_filtered, scenicOptions)
 exprMat_filtered <- log2(exprMat_filtered + 1)
  
 scenicOptions@settings$verbose <- TRUE
@@ -407,6 +423,8 @@ scenicOptions <- runSCENIC_2_createRegulons(scenicOptions)
  
 regulons <- loadInt(scenicOptions, "regulons")
  
+# Score the inferred regulons on all input genes before loading AUC results.
+scenicOptions <- runSCENIC_3_scoreCells(scenicOptions, log2(exprMat + 1))
 regulonAUC_obj <- loadInt(scenicOptions, "aucell_regulonAUC")
 regulonAUC_mtx <- getAUC(regulonAUC_obj)
  
@@ -631,7 +649,15 @@ pheatmap::pheatmap(
 # Example: apply signature scoring to integrated object seurat_all
 normalized_matrix <- as.data.frame(seurat_all[["SCT"]]@data)
  
-# List_1–4: gene sets for signature scoring
+# Explicit gene sets recovered from saved source notebook outputs.
+# The provenance and exact memberships are supplied in single_cell/.
+gene_sets <- read.delim("single_cell/data/gene_sets.tsv", stringsAsFactors = FALSE)
+# The detailed runner defines the table schema and loads the four gene sets.
+# See single_cell/scripts/run_aging_signatures.R for the executable entry point.
+List_1 <- gene_sets$gene[gene_sets$signature == "Aging_1"]
+List_2 <- gene_sets$gene[gene_sets$signature == "Aging_2"]
+List_3 <- gene_sets$gene[gene_sets$signature == "Aging_3"]
+List_4 <- gene_sets$gene[gene_sets$signature == "Aging_4"]
 sig1 <- calculate_signature_score(normalized_matrix, List_1)
 seurat_all <- AddMetaData(seurat_all, sig1, "Aging_1")
  
@@ -663,6 +689,9 @@ DotPlot(
 
 # Part II. Spatial transcriptomics analyses
 
+Heart Visium HD samples use 8-µm bins; adipose samples use segmented cells.
+The detailed `visium_hd/` folder provides all eight sample settings, input object
+specifications, region-selection tables, and executable neighborhood/LIANA scripts.
 
 ## 1. R setup and sample definitions
 
@@ -847,13 +876,13 @@ h5 <- lapply(heart_outs, function(o) {
 })
 stopifnot(all(file.exists(unlist(h5))))
  
-odir <- "/work/Visium/Heart_combined_samples/on_disk_mats"
+odir <- "on_disk_mats_heart"
 dir.create(odir, recursive = TRUE, showWarnings = FALSE)
  
 mat_list <- lapply(names(h5), function(nm) {
   m <- BPCells::open_matrix_10x_hdf5(path = h5[[nm]], feature_type = "Gene Expression")
   out <- file.path(odir, nm)
-  BPCells::write_matrix_dir(mat = m, dir = out, overwrite = TRUE)
+  BPCells::write_matrix_dir(mat = m, dir = out, overwrite = FALSE)
   BPCells::open_matrix_dir(out)
 })
 names(mat_list) <- names(h5)
@@ -867,6 +896,7 @@ obj_list <- lapply(names(mat_list), function(nm) {
 names(obj_list) <- names(mat_list)
  
 heart <- Reduce(function(a, b) merge(a, b), obj_list)
+# Initial permissive QC removes very low-count bins before sketching.
 heart <- subset(heart, subset = nCount_RNA >= 25)
  
 DefaultAssay(heart) <- "RNA"
@@ -935,7 +965,9 @@ heart$cluster_naming[cl == "10"] <- "Red blood cell"
 heart$cluster_naming[cl == "23"] <- "Airway epithelium"
 heart$cluster_naming[cl == "17"] <- "Airway structural tissue"
 heart$cluster_naming[cl == "26"] <- "Cardiac neuron"
-heart$cluster_naming[cl == "8"]  <- "Endocardium"
+npr3 <- FetchData(heart, vars = "Npr3", layer = "data")[colnames(heart), 1]
+# Final saved rule: cluster 8 with detectable Npr3 at the selected 0.01 cutoff.
+heart$cluster_naming[cl == "8" & npr3 >= 0.01] <- "Endocardium"
 heart$cluster_naming[cl == "12"] <- "Epicardium"
 heart$cluster_naming[cl == "5"]  <- "Adipose tissue"
 saveRDS(heart, "heart_mergeobj_preProject_full_sketchHarmony_ENSMUSG16kept_clusterNaming.rds")
@@ -949,6 +981,7 @@ heart_raw <- JoinLayers(heart_raw, assay = "RNA", layers = "counts", new = "coun
 counts <- GetAssayData(heart_raw, assay = "RNA", layer = "counts_joined")
  
 run_rctd_one_heart <- function(sample, pos_path, nCount_cutoff = 30) {
+  # Pre-mapping total-count QC. RCTD UMI_min independently filters mapped counts.
   cells <- colnames(heart_raw)[heart_raw$sample == sample & heart_raw$nCount_RNA >= nCount_cutoff]
   pos <- read_parquet(pos_path)
   coords_raw <- data.frame(x = pos$pxl_col_in_fullres, y = pos$pxl_row_in_fullres,
@@ -982,7 +1015,7 @@ run_rctd_one_heart <- function(sample, pos_path, nCount_cutoff = 30) {
  
   spatialRNA <- SpatialRNA(coords = coords_sample, counts = M_sym, nUMI = Matrix::colSums(M_sym))
   myRCTD <- create.RCTD(spatialRNA = spatialRNA, reference = reference_rctd,
-                        max_cores = 8, keep_reference = TRUE)
+                        max_cores = 8, keep_reference = TRUE, UMI_min = 30)
   myRCTD <- run.RCTD(myRCTD, doublet_mode = "doublet")
   saveRDS(myRCTD, file = paste0("RCTD_fullref_cutoff30_", sample, ".rds"))
 }
@@ -1005,8 +1038,11 @@ read_one_rctd <- function(sample, fp) {
   r <- readRDS(fp)
   cellid <- colnames(r@spatialRNA@counts)
   W <- r@results$weights
+  results_df <- r@results$results_df
+  stopifnot(all(cellid %in% rownames(W)), all(cellid %in% rownames(results_df)))
+  W <- W[cellid, , drop = FALSE]
   pred_type <- colnames(W)[max.col(W, ties.method = "first")]
-  spot_class <- as.character(r@results$results_df$spot_class)
+  spot_class <- as.character(results_df[cellid, "spot_class"])
   pred_type2 <- pred_type
   pred_type2[spot_class == "reject"] <- "Unknown"
   data.frame(cellid = cellid, sample = sample, spot_class = spot_class,
@@ -1024,8 +1060,32 @@ type_vec <- setNames(rctd_merged$rctd_type_unknown, rctd_merged$cellid)
 obj$rctd_spot_class <- unname(spotclass_vec[colnames(obj)])
 obj$rctd_type <- unname(type_vec[colnames(obj)])
  
-# Final labels combine cluster-based labels and RCTD labels, followed by manual curation.
-# Valve-region fibroblasts were reassigned as Cardiac valve from manually selected valve cell IDs.
+# Retain units with an RCTD assignment, including the explicit Unknown class.
+# Prefer the marker/cluster annotation; otherwise use the RCTD label.
+use <- !is.na(obj$rctd_type)
+labels <- as.character(obj$cluster_naming)
+fallback <- is.na(labels) | labels == ""
+labels[fallback] <- as.character(obj$rctd_type)[fallback]
+map_new <- c(B_cell_lineage="B cell lineage", Cardiac_muscle_cell="Ventricular cardiac muscle",
+ Cardiac_neuron="Cardiac neuron", Endocardial_cell="Endothelial cell",
+ Endothelial_cell="Endothelial cell", Erythroid_cell="Red blood cell", Fibroblast="Fibroblast",
+ Lymphatic_endothelial="Lymphatic endothelial cell", Macrophage___Monocyte___DC="Macrophage / Monocyte / DC",
+ Mast_cell="Mast cell", Pericyte="VSMC / Pericyte", T_cell_lineage="T cell lineage",
+ Unknown="Unknown", VSMC="VSMC / Pericyte")
+i <- labels %in% names(map_new)
+labels[i] <- unname(map_new[labels[i]])
+# Each supplied Valve CSV contains manually selected base barcodes in its first column.
+# Only fibroblast-labelled units in these selections are reassigned.
+valve_files <- list.files("annotations", pattern = "^Heart_.*_Valve\\.csv$", full.names=TRUE)
+stopifnot(length(valve_files) == 4)
+valve_ids <- unlist(lapply(valve_files, function(f) {
+ s <- sub("_Valve\\.csv$", "", basename(f))
+ ids <- read.csv(f, check.names=FALSE, stringsAsFactors=FALSE)[[1]]
+ paste0(s, "_", gsub("^'+|'+$", "", ids))
+}))
+labels[which(colnames(obj) %in% valve_ids & labels == "Fibroblast")] <- "Cardiac valve"
+labels[!use] <- NA_character_
+obj$Merged_cellname <- labels
 obj_use <- subset(obj, subset = !is.na(Merged_cellname))
 obj_use$Merged_cellname <- factor(obj_use$Merged_cellname)
 saveRDS(obj_use, "heart_mergeobj_preProject_full_sketchHarmony_ENSMUSG16kept_clusterNaming_RCTDmerged_MergedCellname_ASSIGNEDonly.rds")
@@ -1044,6 +1104,8 @@ add_xy_heart <- function(obj, pos_path) {
   obj
 }
  
+# The additional spatial-count filter was applied to Heart_Aged_1 and Heart_Young_1.
+# The saved source does not apply this 50 threshold to all four samples.
 obj_hd_aged1_50 <- subset(obj_hd_aged1_lab, subset = nCount_Spatial.008um >= 50)
 obj_hd_aged1_50 <- add_xy_heart(obj_hd_aged1_50,
   "Heart_Aged_1/outs/binned_outputs/square_008um/spatial/tissue_positions.parquet")
@@ -1061,13 +1123,13 @@ h5_seg <- lapply(adipose_outs, function(o) {
 })
 stopifnot(all(file.exists(unlist(h5_seg))))
  
-odir <- "/work/Visium/Adipose_combined_samples/on_disk_mats"
+odir <- "on_disk_mats_adipose"
 dir.create(odir, recursive = TRUE, showWarnings = FALSE)
  
 mat_list <- lapply(names(h5_seg), function(nm) {
   m <- BPCells::open_matrix_10x_hdf5(path = h5_seg[[nm]], feature_type = "Gene Expression")
   out <- file.path(odir, nm)
-  BPCells::write_matrix_dir(mat = m, dir = out, overwrite = TRUE)
+  BPCells::write_matrix_dir(mat = m, dir = out, overwrite = FALSE)
   BPCells::open_matrix_dir(out)
 })
 names(mat_list) <- names(h5_seg)
@@ -1081,6 +1143,7 @@ obj_list <- lapply(names(mat_list), function(nm) {
 names(obj_list) <- names(mat_list)
  
 adipose <- Reduce(function(a, b) merge(a, b), obj_list)
+# Initial permissive QC removes very low-count segmented cells before sketching.
 adipose <- subset(adipose, subset = nCount_RNA >= 25)
 DefaultAssay(adipose) <- "RNA"
 adipose <- NormalizeData(adipose, scale.factor = median(adipose$nCount_RNA), verbose = FALSE)
@@ -1131,6 +1194,10 @@ adipose$Cellname_final <- ifelse(adipose$prediction.score.max < 0.4,
                                  "Unknown", adipose$predicted.id)
 saveRDS(adipose, "adipose_mergeobj_preProject_sketchHarmony_labelTransferred.rds")
  
+# Generate the SCT assay used for marker review and downstream module scoring.
+# Source: Adipose_Combination_5, cell 17 (one-based).
+DefaultAssay(adipose) <- "RNA"
+adipose <- SCTransform(adipose, assay = "RNA", new.assay.name = "SCT", verbose = FALSE)
 # Ambiguous labels were reclassified using Harmony SNN reclustering.
 DefaultAssay(adipose) <- "SCT"
 adipose <- FindNeighbors(adipose, reduction = "harmony", dims = 1:30,
@@ -1166,7 +1233,8 @@ map_cb_to_merged <- c(
   "Adipose stromal / Fibroblast" = "Adipose stromal cell",
   "B cell" = "B cell",
   "Endothelial (capillary~general)" = "Endothelial cell",
-  "Erythroid" = "Unknown",
+  "Erythroid" = "Erythroid cell",
+  "Unassigned" = "Unknown",
   "Myeloid (Macrophage/DC; MHCII+; incl M2-like)" = "Macrophage / Monocyte / DC",
   "Vascular mural (VSMC/Pericyte) + Endo mixed (Endo-mural mixed; suspicious)" = "VSMC/Pericyte"
 )
@@ -1221,15 +1289,15 @@ add_segmentation_centroids <- function(seu, geojson_path, id_col = "cell_id") {
   AddMetaData(seu, metadata = cell_meta_named)
 }
  
-# Example; repeated for all four adipose samples.
-obj_list[["Adipose_Young_1"]] <- add_segmentation_centroids(
-  obj_list[["Adipose_Young_1"]],
-  "GeoJason/Adipose_Young_1/cell_segmentations.geojson"
-)
-saveRDS(obj_list[["Adipose_Young_1"]], "Adipose_Young_1_visiumHDsementation_ASSIGNEDonly_withXY.rds")
-saveRDS(obj_list[["Adipose_Young_2"]], "Adipose_Young_2_visiumHDsementation_ASSIGNEDonly_withXY.rds")
-saveRDS(obj_list[["Adipose_Aged_1"]],  "Adipose_Aged_1_visiumHDsementation_ASSIGNEDonly_withXY.rds")
-saveRDS(obj_list[["Adipose_Aged_2"]],  "Adipose_Aged_2_visiumHDsementation_ASSIGNEDonly_withXY.rds")
+# All four annotated samples need their own segmentation geometry.
+adipose_annotated <- readRDS("adipose_mergeobj_sketchHarmony_SCT_labelTransferred_k50_r020_Naming_260220.rds")
+obj_list <- SplitObject(adipose_annotated, split.by = "sample")
+samples <- c("Adipose_Young_1", "Adipose_Young_2", "Adipose_Aged_1", "Adipose_Aged_2")
+for (sample in samples) {
+  obj_list[[sample]] <- add_segmentation_centroids(
+    obj_list[[sample]], file.path("GeoJason", sample, "cell_segmentations.geojson"))
+  saveRDS(obj_list[[sample]], paste0(sample, "_visiumHDsementation_ASSIGNEDonly_withXY.rds"))
+}
 ```
 
 
@@ -1253,10 +1321,21 @@ gene_list <- c(
  
 # Heart: score and 100-um neighborhood in LV ROI (8-um bins)
 library(RANN)
-heart_roi <- readRDS("rds_out/Heart_Aged_1_LV_ROI_norm.rds")
-DefaultAssay(heart_roi) <- "Spatial.008um"
-gene_use <- intersect(gene_list, rownames(heart_roi))
-heart_roi <- AddModuleScore(heart_roi, features = list(gene_use), name = "Aging_1_Score")
+# Score the full annotated sample first, then subset to the manual LV ROI.
+# This preserves the module-score background used in the source workflow.
+heart_sample <- readRDS("Heart_Aged_1_visiumHD8um_ASSIGNEDonly_withXY.rds")
+DefaultAssay(heart_sample) <- "Spatial.008um"
+heart_sample <- NormalizeData(heart_sample, assay = "Spatial.008um")
+gene_use <- intersect(gene_list, rownames(heart_sample))
+heart_sample <- AddModuleScore(heart_sample, features = list(gene_use), name = "Aging_1_Score")
+roi <- read.csv("annotations/Aged_1_LV.csv", stringsAsFactors = FALSE)
+roi_col <- intersect(c("barcode", "Barcode", "BARCODE", "cellid", "CellID", "cell_id"), names(roi))[1]
+stopifnot(!is.na(roi_col))
+roi_barcodes <- unique(na.omit(as.character(roi[[roi_col]])))
+base_barcodes <- sub("^.*_(s_008um_)", "\\1", colnames(heart_sample))
+keep <- colnames(heart_sample)[base_barcodes %in% roi_barcodes]
+stopifnot(length(keep) > 0)
+heart_roi <- subset(heart_sample, cells = keep)
  
 thr <- 0.3  # threshold used to delineate spatially restricted Aging_1-high bins
 radius_um <- 100
@@ -1470,6 +1549,8 @@ combined.to_csv("LIANA_age_group_summary_neighbor_gt_distal.csv", index=False)
 ```
 
 
+
+
 # Part III. Other RNA-seq-related and transcriptome analyses
 
 
@@ -1576,8 +1657,9 @@ make_spearman_heatmap(
 # IFN signature score & ridge plot (Adipose example)
 ############################
  
-# IFN$Symbol_Merged: vector of IFN-related genes (length 65)
-IFN_genes <- head(IFN$Symbol_Merged, n = 65)
+# IFN65 gene set supplied with the detailed code.
+gene_sets <- read.delim("single_cell/data/gene_sets.tsv", stringsAsFactors = FALSE)
+IFN_genes <- gene_sets$gene[gene_sets$signature == "IFN65"]
  
 seurat_adipose_tmp <- seurat_adipose
 normalized_matrix_ifn <- as.data.frame(seurat_adipose_tmp[["RNA"]]@data)
@@ -1620,6 +1702,8 @@ ggplot(plot_data, aes(x = genes.score, y = Vessel_Type, fill = Condition)) +
   labs(y = "Vessel_Type", x = "IFN Signature Score")
  
 # Welch t-test per Vessel_Type (Condition groups).
+# Cell-level descriptive comparison only: cells are not independent mice.
+# P values do not provide animal-level inference (latest manuscript Methods).
 # Because genes.score is a metadata column, subsetting by Vessel_Type preserves
 # the corresponding score and Condition for each cell.
 t_test_results <- lapply(unique(seurat_adipose_tmp@meta.data$Vessel_Type), function(category) {
@@ -1756,6 +1840,8 @@ seurat_cap_reactome <- readRDS(
 df_reactome <- read.csv("Reactome_annotations.csv", fileEncoding = "UTF-8")
 Reactome_path <- df_reactome$x
  
+# Individual regulon-pathway ranking: Pearson r; retain positive r and rank r^2.
+# This is an association-strength ranking, not a significance test.
 # Example: Irf7 regulon vs Reactome (R²)
 reg_data <- GetAssayData(
   seurat_cap_reactome,
@@ -1788,6 +1874,9 @@ ggplot(top20_df,
   ggtitle("Irf7 regulon and Reactome Pathways") +
   theme_minimal()
  
+# Multi-regulon network: Spearman rank correlation; keep the top 20 positive
+# associations per regulon. The >0.3 label/edge cutoff controls visualization
+# and is not a P-value threshold.
 # Multi-TF network (Irf7, Irf9, Stat1, Stat2, Junb, Pparg, Cebpd, Jund, Jun, Klf2)
 targets <- c("Irf7", "Irf9", "Stat1", "Stat2",
              "Junb", "Pparg", "Cebpd", "Jund", "Jun", "Klf2")
@@ -1905,7 +1994,8 @@ plot(
  
 # Junb regulon (regulonAUC_extended assay) in adipose ECs
 gene_of_interest <- "Junb"
-cutoff <- 0.15
+cutoff <- 0.15  # midpoint of activity range in Extended Data Fig. 4j
+# This split separates relatively high and low regulon activity.
  
 DefaultAssay(seurat_adipose) <- "regulonAUC_extended"
 junb_reg <- seurat_adipose[["regulonAUC_extended"]]@data[gene_of_interest, ]
@@ -1918,6 +2008,14 @@ seurat_adipose$Regulon_Junb <- ifelse(
 young_obj <- subset(seurat_adipose, subset = Type5 == "3 month")
 aged_obj  <- subset(seurat_adipose, subset = Type5 == "1 year")
  
+# Gene DEGs require an expression assay, not regulonAUC_extended.
+# Set this option to the gene-expression assay used for the comparison:
+# options(natureaging.junb_gene_assay = "SCT")  # or "RNA" as appropriate
+gene_assay <- getOption("natureaging.junb_gene_assay", NA_character_)
+stopifnot(length(gene_assay) == 1L, !is.na(gene_assay),
+          gene_assay %in% c("RNA", "SCT"), gene_assay %in% Assays(aged_obj))
+DefaultAssay(aged_obj) <- gene_assay
+# Prepare the selected expression assay for differential expression before this step.
 # DEGs in Aged (Junb high vs Junb low)
 DEGs_Junb <- FindMarkers(
   aged_obj,
@@ -1936,8 +2034,29 @@ plot(df_EC$avg_log2FC, -log10(df_EC$p_val + 1e-308),
      col  = "gray",
      pch  = 16)
 ```
+## 2. Visualization of Metascape TRRUST regulator results
+
+The visualization uses the original exported enrichment summary. It does not rerun
+Metascape or infer a new regulator ranking. The table and the recovered plotting
+script are included for Figure 4j.
+
+```r
+# From the single_cell directory:
+# Rscript scripts/plot_fig4j_regulators.R Fig4j_regulators.pdf
+```
+
 # Part IV. Xenium spatial analyses
 
+Distances and cumulative proximity curves summarize the spatial organization within
+each examined tissue specimen. Each organ–age condition represents one mouse.
+The optional independent-cell bootstrap describes within-specimen resampling
+variation; biological replication is evaluated at the animal level.
+
+Expression is taken from the normalized Xenium assay. Heart and adipose use the
+90th percentile of Bst2 across all cells pooled over Young and Aged within each
+organ, followed by selection of endothelial-containing segments. Muscle uses
+Bst2-positive endothelial-containing segments. The detailed runner and settings
+are in `xenium/`.
 
 ## 1. R setup and organ-specific Xenium objects
 
@@ -1973,14 +2092,15 @@ adipose_qc <- readRDS("adipose_qc_annotated_refined_updated.rds")
 
 ```r
 # Xenium centroid coordinates are expressed in micrometers.
-# Expression values are taken from the normalized data layer of the SCT assay.
+# Expression values are taken from the normalized data layer of the Xenium assay.
+# The original preprocessing used NormalizeData(), not SCTransform().
 
 make_xenium_spatial_table <- function(obj,
                                       fov,
                                       age,
                                       annotation_col,
-                                      assay = "SCT") {
-  coords <- GetTissueCoordinates(obj, image = fov)
+                                      assay = "Xenium") {
+  coords <- GetTissueCoordinates(obj[[fov]], which = "centroids")
 
   if (!"cell" %in% colnames(coords)) {
     coords$cell <- rownames(coords)
@@ -1989,7 +2109,8 @@ make_xenium_spatial_table <- function(obj,
   stopifnot(all(c("cell", "x", "y") %in% colnames(coords)))
 
   coords <- coords[, c("cell", "x", "y"), drop = FALSE]
-  coords <- coords[!duplicated(coords$cell), , drop = FALSE]
+  stopifnot(!anyDuplicated(coords$cell))
+  stopifnot(all(is.finite(coords$x)), all(is.finite(coords$y)))
 
   md <- obj@meta.data
   stopifnot(annotation_col %in% colnames(md))
@@ -2014,6 +2135,10 @@ make_xenium_spatial_table <- function(obj,
 
   out$Age <- age
   out$annotation <- as.character(md[out$cell, annotation_col])
+  stopifnot(all(is.finite(out$Bst2)), all(is.finite(out$Pira2)))
+  if ("age_group" %in% colnames(md)) {
+    stopifnot(all(as.character(md[out$cell, "age_group"]) == age))
+  }
 
   out
 }
@@ -2073,29 +2198,31 @@ adipose_spatial_df <- bind_rows(
 # Bst2-high cells are selected only from cells annotated as
 # "Endothelial-containing segment".
 #
-# Within each organ, Young and Aged endothelial-containing segments are pooled
-# to define one common cutoff. If at least 10% of these cells express Bst2,
-# Bst2-high is defined by the organ-specific 90th percentile of Bst2 expression.
-# In skeletal muscle, fewer than 10% of endothelial-containing segments express
-# Bst2; therefore, all Bst2-positive endothelial-containing segments are retained.
+# Heart/Adipose: calculate the 90th percentile from ALL spatial cells pooled
+# across the two ages, then restrict reference cells to endothelial segments.
+# Muscle: the all-cell 90th percentile was zero (5.62908% Bst2-positive),
+# so the original final analysis retained all Bst2-positive endothelial segments.
+# This cutoff is an empirical selection rule, not a significance threshold.
 
-define_bst2_high_ec <- function(spatial_df, organ_name) {
+define_bst2_high_ec <- function(spatial_df, organ_name,
+                                endothelial_label = "Endothelial-containing segment") {
   ec_df <- spatial_df %>%
-    filter(annotation == "Endothelial-containing segment")
+    filter(annotation == endothelial_label)
 
   stopifnot(nrow(ec_df) > 0)
 
-  positive_fraction <- mean(ec_df$Bst2 > 0, na.rm = TRUE)
-  q90 <- unname(quantile(ec_df$Bst2, probs = 0.90, na.rm = TRUE, type = 7))
+  positive_fraction <- mean(spatial_df$Bst2 > 0, na.rm = TRUE)
+  q90 <- unname(quantile(spatial_df$Bst2, probs = 0.90, na.rm = TRUE, type = 7))
 
-  if (positive_fraction < 0.10 || q90 <= 0) {
+  if (organ_name == "Muscle") {
     cutoff <- 0
     rule <- "All Bst2-positive endothelial-containing segments"
     high_df <- ec_df %>%
       filter(Bst2 > 0)
   } else {
+    stopifnot(q90 > 0) # Do not silently select every zero-expressing segment.
     cutoff <- q90
-    rule <- "Bst2 expression at or above the organ-specific 90th percentile"
+    rule <- "Bst2 at or above the organ-specific pooled all-cell 90th percentile"
     high_df <- ec_df %>%
       filter(Bst2 > 0, Bst2 >= cutoff)
   }
@@ -2104,7 +2231,9 @@ define_bst2_high_ec <- function(spatial_df, organ_name) {
     Organ = organ_name,
     Endothelial_n = nrow(ec_df),
     Bst2_positive_n = sum(ec_df$Bst2 > 0, na.rm = TRUE),
-    Bst2_positive_fraction = positive_fraction,
+    All_spatial_cell_n = nrow(spatial_df),
+    All_cell_Bst2_positive_fraction = positive_fraction,
+    Cutoff_population = "All Young and Aged spatial cells pooled within organ",
     Bst2_high_cutoff = cutoff,
     Bst2_high_n = nrow(high_df),
     Selection_rule = rule,
@@ -2143,7 +2272,7 @@ bst2_high_definition_summary
 
 # Confirm the muscle-specific rule used in the analysis.
 stopifnot(
-  muscle_bst2_definition$summary$Bst2_positive_fraction < 0.10
+  muscle_bst2_definition$summary$All_cell_Bst2_positive_fraction < 0.10
 )
 ```
 
@@ -2172,7 +2301,7 @@ calculate_nearest_bst2_high_ec_distance <- function(spatial_df,
       filter(Age == age_group)
 
     if (nrow(query_df) == 0 || nrow(reference_df) == 0) {
-      return(NULL)
+      stop("Missing macrophages or Bst2-high endothelial segments for ", age_group)
     }
 
     nn <- RANN::nn2(
@@ -2200,7 +2329,7 @@ calculate_nearest_bst2_high_ec_distance <- function(spatial_df,
 ```
 
 
-## 5. Cumulative proximity curves and bootstrap confidence intervals
+## 5. Descriptive proximity curves and optional cell-resampling bands
 
 
 ```r
@@ -2238,6 +2367,24 @@ summarize_cumulative_proximity <- function(distance_df,
 }
 
 
+summarize_proximity_difference <- function(distance_df,
+                                           thresholds_um = seq(0, 200, 5)) {
+  bind_rows(lapply(c("Young", "Aged"), function(age_group) {
+    dd <- distance_df[as.character(distance_df$Age) == age_group, , drop = FALSE]
+    dp <- dd$nearest_Bst2_high_EC_distance_um[dd$Pira2_status == "Pira2-positive"]
+    dn <- dd$nearest_Bst2_high_EC_distance_um[dd$Pira2_status == "Pira2-negative"]
+    if (!length(dp) || !length(dn)) stop("Both Pira2 groups are required: ", age_group)
+    data.frame(Age = age_group, Distance_um = thresholds_um,
+      Difference_percent = vapply(thresholds_um,
+        function(d) 100 * (mean(dp <= d) - mean(dn <= d)), numeric(1)),
+      Pira2_positive_n = length(dp), Pira2_negative_n = length(dn))
+  }))
+}
+
+
+# Legacy cell-resampling algorithm: pointwise percentile bands conditional on
+# observed cells. These are NOT animal-level confidence intervals and do not
+# account for spatial dependence. The caller controls whether bands are drawn.
 bootstrap_proximity_difference <- function(distance_df,
                                            thresholds_um = seq(0, 200, 5),
                                            n_boot = 1000,
@@ -2318,7 +2465,7 @@ bootstrap_proximity_difference <- function(distance_df,
 }
 
 
-plot_proximity_difference <- function(bootstrap_df, organ_name) {
+plot_proximity_difference <- function(bootstrap_df, organ_name, show_cell_bands = FALSE) {
   age_colors <- c(
     Young = "#F8766D",
     Aged = "#00BFC4"
@@ -2338,19 +2485,18 @@ plot_proximity_difference <- function(bootstrap_df, organ_name) {
       linewidth = 0.4,
       color = "grey40"
     ) +
-    geom_ribbon(
-      aes(
-        ymin = CI_lower,
-        ymax = CI_upper
-      ),
-      alpha = 0.20,
-      color = NA
-    ) +
+    {if (show_cell_bands) geom_ribbon(
+      aes(ymin = CI_lower, ymax = CI_upper),
+      alpha = 0.20, color = NA
+    )} +
     geom_line(linewidth = 1) +
     scale_color_manual(values = age_colors) +
     scale_fill_manual(values = age_colors) +
     labs(
       title = organ_name,
+      subtitle = if (show_cell_bands)
+        "Within-specimen cell-resampling bands; one mouse per age; not animal-level inference"
+      else "Descriptive within-specimen comparison; one mouse per age",
       x = "Distance to nearest Bst2-high endothelial-containing segment (µm)",
       y = "Pira2-positive minus Pira2-negative monocyte/macrophage-lineage cells (%)"
     ) +
@@ -2368,7 +2514,8 @@ run_bst2_pira2_proximity <- function(spatial_df,
                                      organ_name,
                                      thresholds_um = seq(0, 200, 5),
                                      n_boot = 1000,
-                                     seed = 123) {
+                                     seed = 123,
+                                     include_cell_bootstrap = FALSE) {
   distance_df <- calculate_nearest_bst2_high_ec_distance(
     spatial_df = spatial_df,
     bst2_high_ec_df = bst2_definition$high_cells
@@ -2379,16 +2526,20 @@ run_bst2_pira2_proximity <- function(spatial_df,
     thresholds_um = thresholds_um
   )
 
-  bootstrap_df <- bootstrap_proximity_difference(
-    distance_df = distance_df,
-    thresholds_um = thresholds_um,
-    n_boot = n_boot,
-    seed = seed
-  )
+  if (include_cell_bootstrap) {
+    bootstrap_df <- bootstrap_proximity_difference(
+      distance_df = distance_df, thresholds_um = thresholds_um,
+      n_boot = n_boot, seed = seed
+    )
+  } else {
+    # The observed difference is calculated without resampling.
+    bootstrap_df <- summarize_proximity_difference(distance_df, thresholds_um)
+  }
 
   proximity_plot <- plot_proximity_difference(
     bootstrap_df = bootstrap_df,
-    organ_name = organ_name
+    organ_name = organ_name,
+    show_cell_bands = include_cell_bootstrap
   )
 
   list(

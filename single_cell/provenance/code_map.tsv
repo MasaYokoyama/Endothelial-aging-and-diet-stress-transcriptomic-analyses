@@ -1,0 +1,10 @@
+export	source	source_cells_1based	changes
+R/scenic_workflow.R	SCENIC_Capillary/SCENIC_Aging_Adipose/SCENIC_Aging_Adipose_reSCENIC.ipynb	8–24;32–40;44–56	Generalized; paths and seed explicit; both nonduplicated and extended outputs saved
+R/signature_scores.R	Vascular subset (EC pericyte VSMC)/IFNscore_AllECs_redgeplot.ipynb	15;20;22;24;26	Generalized control matching and cell-aligned metadata; descriptive tests only
+R/regulon_pathway_associations.R	Endothelial cell analysis/scGSVA_EachOrgan/Adipose/scGSVA_Adipose_Reactome_correlation_with regulons.ipynb	single-TF blocks	Generalized positive Pearson ranking; cell names validated
+R/regulon_pathway_associations.R	Endothelial cell analysis/scGSVA_EachOrgan/Adipose/scGSVA_Adipose_Reactome_correlation_with regulons-Spearman.ipynb	58	Generalized multi-TF Spearman network
+R/cellchat_workflow.R	CellChat/CellChat_EachCondition/CellChat_reanalysis_Adipose_Normal_Young.ipynb	7–13;18	Common condition-specific network construction
+R/junb_gene_degs.R	Supplementary_Code_Transcriptomic_Analyses.md	Junb section	Explicit gene-expression assay argument
+R/gene_filter_audit.R	Supplementary_Code_Transcriptomic_Analyses.md	shared utility 0-1	Historical regex unchanged; matched-term audit added
+scripts/plot_fig4j_regulators.R	Junb high regulators_bubble plot.ipynb	5–6	Final saved plotting block; input/output paths parameterized
+scripts/run_aging_signatures.R	SCENIC_Capillary/SCENIC_data_analysis_Aging_Diet/SCENIC_AgingComparison_reSCENIC_CorrealtionHeatmap(TF-top10x4tissues).ipynb	109–117	SCT data and named Aging_1–4 metadata; stored gene lists supplied
