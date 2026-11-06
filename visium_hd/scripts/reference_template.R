@@ -83,6 +83,7 @@ merged_obj <- RunUMAP(
   dims = dims_use,
   reduction.name = "umap_harmony20"
 )
+# A single graph name stores the NN graph; the original name is retained.
 merged_obj <- FindNeighbors(
   merged_obj,
   reduction = "harmony",

@@ -22,7 +22,8 @@ saveRDS(adipose, "adipose_mergeobj_preProject_sketchHarmony_labelTransferred.rds
 # Source: Adipose_Combination_5, cell 17 (one-based).
 DefaultAssay(adipose) <- "RNA"
 adipose <- SCTransform(adipose, assay = "RNA", new.assay.name = "SCT", verbose = FALSE)
-# Ambiguous labels were reclassified using Harmony SNN reclustering.
+# Ambiguous labels were reclassified using the stored Harmony NN graph.
+# The original graph name is retained below.
 DefaultAssay(adipose) <- "SCT"
 adipose <- FindNeighbors(adipose, reduction = "harmony", dims = 1:30,
                          k.param = 50, graph.name = "harmony_snn_k50")

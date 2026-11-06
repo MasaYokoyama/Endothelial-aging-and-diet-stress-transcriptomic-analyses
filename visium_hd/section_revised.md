@@ -124,6 +124,7 @@ merged_obj <- RunUMAP(
   dims = dims_use,
   reduction.name = "umap_harmony20"
 )
+# A single graph name stores the NN graph; the original name is retained.
 merged_obj <- FindNeighbors(
   merged_obj,
   reduction = "harmony",
@@ -509,7 +510,8 @@ saveRDS(adipose, "adipose_mergeobj_preProject_sketchHarmony_labelTransferred.rds
 # Source: Adipose_Combination_5, cell 17 (one-based).
 DefaultAssay(adipose) <- "RNA"
 adipose <- SCTransform(adipose, assay = "RNA", new.assay.name = "SCT", verbose = FALSE)
-# Ambiguous labels were reclassified using Harmony SNN reclustering.
+# Ambiguous labels were reclassified using the stored Harmony NN graph.
+# The original graph name is retained below.
 DefaultAssay(adipose) <- "SCT"
 adipose <- FindNeighbors(adipose, reduction = "harmony", dims = 1:30,
                          k.param = 50, graph.name = "harmony_snn_k50")
@@ -795,6 +797,7 @@ def neighbor_distal_keep(res_df: pd.DataFrame) -> pd.DataFrame:
     nb_mean = nb.groupby(["ct", "lr"], as_index=False)["lrscore"].mean().rename(columns={"lrscore": "mean_neighbor"})
     ds_mean = ds.groupby(["ct", "lr"], as_index=False)["lrscore"].mean().rename(columns={"lrscore": "mean_distal"})
     m = nb_mean.merge(ds_mean, on=["ct", "lr"], how="left")
+    # Original postprocessing: set missing Distal L-R scores to zero for this comparison.
     m["mean_distal"] = m["mean_distal"].fillna(0.0)
     m["delta"] = m["mean_neighbor"] - m["mean_distal"]
     return m[m["delta"] > 0].copy()
