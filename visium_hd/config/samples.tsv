@@ -1,0 +1,9 @@
+sample	tissue	age	replicate_label	outs_relative	scored_rds_relative	scored_rds_found	core_threshold	radius_um	additional_spatial_count_min	score_assay	liana_tag
+Heart_Young_1	Heart	Young	1	Visium_session1/Heart_Young_1/outs	Heart_combined_samples/CellCellInteraction_Aging_1/rds_out/Heart_Young_1_LV_ROI_norm_Aging1Score.rds	True	0.3	100	50	Spatial.008um	Heart_Young1
+Heart_Young_2	Heart	Young	2	Visium_session2/Heart_Young_2/outs	Heart_combined_samples/CellCellInteraction_Aging_1/rds_out/Heart_Young_2_LV_ROI_norm_Aging1Score.rds	True	0.3	100		Spatial.008um	Heart_Young2
+Heart_Aged_1	Heart	Aged	1	Visium_session1/Heart_Aged_1/outs	Heart_combined_samples/CellCellInteraction_Aging_1/rds_out/Heart_Aged_1_LV_ROI_norm_Aging1Score.rds	True	0.3	100	50	Spatial.008um	Heart_Aged1
+Heart_Aged_2	Heart	Aged	2	Visium_session2/Heart_Aged_2/outs	Heart_combined_samples/CellCellInteraction_Aging_1/rds_out/Heart_Aged_2_LV_ROI_norm_Aging1Score.rds	True	0.3	100		Spatial.008um	Heart_Aged2
+Adipose_Young_1	Adipose	Young	1	Visium_session1/Adipose_Young_1/outs	Adipose_combined_samples_CellSegmentation/CellCellInteraction_Aging_1/rds_out/Adipose_Young_1_norm_Aging1Score.rds	True	0.05	100		SCT	Adipose_Young1
+Adipose_Young_2	Adipose	Young	2	Visium_session2/Adipose_Young_2/outs	Adipose_combined_samples_CellSegmentation/CellCellInteraction_Aging_1/rds_out/Adipose_Young_2_norm_Aging1Score.rds	True	0.05	100		SCT	Adipose_Young2
+Adipose_Aged_1	Adipose	Aged	1	Visium_session1/Adipose_Aged_1/outs	Adipose_combined_samples_CellSegmentation/CellCellInteraction_Aging_1/rds_out/Adipose_Aged_1_norm_Aging1Score.rds	True	0.05	100		SCT	Adipose_Aged1
+Adipose_Aged_2	Adipose	Aged	2	Visium_session2/Adipose_Aged_2/outs	Adipose_combined_samples_CellSegmentation/CellCellInteraction_Aging_1/rds_out/Adipose_Aged_2_norm_Aging1Score.rds	True	0.05	100		SCT	Adipose_Aged2

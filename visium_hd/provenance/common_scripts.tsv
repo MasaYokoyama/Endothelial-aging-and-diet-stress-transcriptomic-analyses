@@ -1,0 +1,7 @@
+script	source_notebook	source_cells_one_based	changes
+run_neighborhood_export.R	Heart_combined_samples/CellCellInteraction_Aging_1/Heart_Combination_6(Aging_1 core and neighbor).ipynb	54,56,57,58	Generalized loop; stored scores preserved; explicit ID alignment and empty-core checks added
+run_neighborhood_export.R	Adipose_combined_samples_CellSegmentation/CellCellInteraction_Aging_1/Adipose_Combination_7(Aging_1 core and neighbor).ipynb	22,26,27,28	Original centroid-span calibration retained and recorded
+run_liana.py	Heart_combined_samples/CellCellInteraction_Aging_1/Python LIANA+ Heart Overall.ipynb	3,5,7	Common CLI; missing distal flag and version recording added
+run_liana.py	Adipose_combined_samples_CellSegmentation/CellCellInteraction_Aging_1/Python LIANA+ Adipose Overall.ipynb	3,9,11,13,15	Common CLI; original two-replicate selection retained
+module_score_neighborhood_example.R	Heart_combined_samples/CellCellInteraction_Aging_1/Heart_Combination_6(Aging_1 core and neighbor).ipynb	14–18,21–24,54–58	Normalize/score full sample, then LV subset; includes published gene list
+merge_heart_labels.R	Heart_combined_samples/Heart_Combination_3(Sketch harmony_RCTD_combined_cellnaming).ipynb	15,19–21,25–26	Generalized function; caller supplies four valve files

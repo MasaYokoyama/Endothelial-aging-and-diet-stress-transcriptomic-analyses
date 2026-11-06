@@ -1,0 +1,15 @@
+COMMAND: ['/usr/local/bin/Rscript', '--vanilla', 'NatureAging_Transcriptomic_Code/validation/mapping_rctd/tests/check_mapping_helpers.R']
+ELAPSED_SECONDS: 5.08
+EXIT: 0
+PARSE_OK 01_preflight.R 
+PARSE_OK 02_compare_mappings.R 
+PARSE_OK 03_rerun_paired_rctd.R 
+PARSE_OK config.example.R 
+PASS: first nonempty mapping, one-to-many candidates, unmapped IDs, raw count summation, barcode preservation, row-order invariance.
+FACTOR_DIRECT_COMPARE_ERROR TRUE 
+During startup - Warning messages:
+1: Setting LC_CTYPE failed, using "C" 
+2: Setting LC_COLLATE failed, using "C" 
+3: Setting LC_TIME failed, using "C" 
+4: Setting LC_MESSAGES failed, using "C" 
+5: Setting LC_MONETARY failed, using "C" 

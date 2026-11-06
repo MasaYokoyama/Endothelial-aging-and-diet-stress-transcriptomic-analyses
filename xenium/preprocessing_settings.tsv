@@ -1,0 +1,5 @@
+organ	assay	qc_rule	normalization	scale_features	pca_features	pca_npcs	final_dimensions	final_cluster_resolution	hematopoietic_dimensions	hematopoietic_resolution	source_normalize	source_naming	r_kernel_version	package_versions
+Heart	Xenium	nCount_Xenium > 5 & nFeature_Xenium > 3	NormalizeData defaults as in source	all assay genes	all assay genes	30	20	1	20	0.4	Heart_normalize.ipynb	Heart_normalize_naming.ipynb	4.4.0	Not captured in supplied notebooks
+Muscle	Xenium	nCount_Xenium > 5 & nFeature_Xenium > 3	NormalizeData defaults as in source	all assay genes	all assay genes	30	20	1.2	15	0.8	Muscle_normalize.ipynb	Muscle_normalize_naming.ipynb	4.4.0	Not captured in supplied notebooks
+Adipose	Xenium	nCount_Xenium > 5 & nFeature_Xenium > 3	NormalizeData defaults as in source	all assay genes	all assay genes	30	15	1.2	20	1	Adipose_normalize.ipynb	Adipose_normalize_naming.ipynb	4.4.0	Not captured in supplied notebooks
+Liver	Xenium	nCount_Xenium > 5 & nFeature_Xenium > 3	NormalizeData defaults as in source	all assay genes	all assay genes	30	15	1.2	15	0.8	Liver_normalize.ipynb	Liver_normalize_naming.ipynb	4.4.0	Not captured in supplied notebooks

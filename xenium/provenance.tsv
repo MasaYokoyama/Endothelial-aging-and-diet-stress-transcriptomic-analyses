@@ -1,0 +1,66 @@
+artifact	source_notebook	source_cell_1based	purpose	status
+source_evidence/Heart_normalize_naming.R	Heart_normalize_naming.ipynb	17	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Heart_normalize_naming.R	Heart_normalize_naming.ipynb	27	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Heart_normalize_naming.R	Heart_normalize_naming.ipynb	31	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Heart_normalize_naming_Endocardium_refined.R	Heart_normalize_naming_Endocardium_refined.ipynb	5	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Heart_normalize_naming_Endocardium_refined.R	Heart_normalize_naming_Endocardium_refined.ipynb	6	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Heart_normalize_naming_Endocardium_refined.R	Heart_normalize_naming_Endocardium_refined.ipynb	7	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Heart_normalize_naming_Endocardium_refined.R	Heart_normalize_naming_Endocardium_refined.ipynb	8	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Heart_normalize_naming_Endocardium_refined.R	Heart_normalize_naming_Endocardium_refined.ipynb	9	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Muscle_normalize_naming.R	Muscle_normalize_naming.ipynb	14	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Muscle_normalize_naming.R	Muscle_normalize_naming.ipynb	22	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Muscle_normalize_naming.R	Muscle_normalize_naming.ipynb	23	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Muscle_normalize_naming.R	Muscle_normalize_naming.ipynb	24	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Muscle_normalize_naming.R	Muscle_normalize_naming.ipynb	25	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Muscle_normalize_naming.R	Muscle_normalize_naming.ipynb	32	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Adipose_normalize_naming.R	Adipose_normalize_naming.ipynb	8	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Adipose_normalize_naming.R	Adipose_normalize_naming.ipynb	24	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Adipose_normalize_naming.R	Adipose_normalize_naming.ipynb	26	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Liver_normalize_naming.R	Liver_normalize_naming.ipynb	16	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Liver_normalize_naming.R	Liver_normalize_naming.ipynb	35	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Liver_normalize_naming.R	Liver_normalize_naming.ipynb	41	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Liver_normalize_naming.R	Liver_normalize_naming.ipynb	46	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Liver_normalize_naming.R	Liver_normalize_naming.ipynb	55	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Liver_normalize_naming.R	Liver_normalize_naming.ipynb	56	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Heart_IFN_Pira2_proximity.R	Heart_IFN_Pira2_proximity.ipynb	5	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Heart_IFN_Pira2_proximity.R	Heart_IFN_Pira2_proximity.ipynb	7	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Heart_IFN_Pira2_proximity.R	Heart_IFN_Pira2_proximity.ipynb	8	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Heart_IFN_Pira2_proximity.R	Heart_IFN_Pira2_proximity.ipynb	11	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Heart_IFN_Pira2_proximity.R	Heart_IFN_Pira2_proximity.ipynb	62	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Heart_IFN_Pira2_proximity.R	Heart_IFN_Pira2_proximity.ipynb	63	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Heart_IFN_Pira2_proximity_Figures.R	Heart_IFN_Pira2_proximity_Figures.ipynb	8	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Heart_IFN_Pira2_proximity_Figures.R	Heart_IFN_Pira2_proximity_Figures.ipynb	10	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Heart_IFN_Pira2_proximity_Figures.R	Heart_IFN_Pira2_proximity_Figures.ipynb	12	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Heart_IFN_Pira2_proximity_Figures.R	Heart_IFN_Pira2_proximity_Figures.ipynb	13	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Muscle_IFN_Pira2_proximity.R	Muscle_IFN_Pira2_proximity.ipynb	5	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Muscle_IFN_Pira2_proximity.R	Muscle_IFN_Pira2_proximity.ipynb	6	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Muscle_IFN_Pira2_proximity.R	Muscle_IFN_Pira2_proximity.ipynb	18	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Muscle_IFN_Pira2_proximity.R	Muscle_IFN_Pira2_proximity.ipynb	19	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Muscle_IFN_Pira2_proximity.R	Muscle_IFN_Pira2_proximity.ipynb	20	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Muscle_IFN_Pira2_proximity_Figures.R	Muscle_IFN_Pira2_proximity_Figures.ipynb	7	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Muscle_IFN_Pira2_proximity_Figures.R	Muscle_IFN_Pira2_proximity_Figures.ipynb	8	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Muscle_IFN_Pira2_proximity_Figures.R	Muscle_IFN_Pira2_proximity_Figures.ipynb	10	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Muscle_IFN_Pira2_proximity_Figures.R	Muscle_IFN_Pira2_proximity_Figures.ipynb	11	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Adipose_IFN_Pira2_proximity.R	Adipose_IFN_Pira2_proximity.ipynb	5	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Adipose_IFN_Pira2_proximity.R	Adipose_IFN_Pira2_proximity.ipynb	6	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Adipose_IFN_Pira2_proximity.R	Adipose_IFN_Pira2_proximity.ipynb	17	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Adipose_IFN_Pira2_proximity.R	Adipose_IFN_Pira2_proximity.ipynb	18	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Adipose_IFN_Pira2_proximity_Figures.R	Adipose_IFN_Pira2_proximity_Figures.ipynb	5	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Adipose_IFN_Pira2_proximity_Figures.R	Adipose_IFN_Pira2_proximity_Figures.ipynb	6	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Adipose_IFN_Pira2_proximity_Figures.R	Adipose_IFN_Pira2_proximity_Figures.ipynb	7	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Adipose_IFN_Pira2_proximity_Figures.R	Adipose_IFN_Pira2_proximity_Figures.ipynb	10	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Adipose_IFN_Pira2_proximity_Figures.R	Adipose_IFN_Pira2_proximity_Figures.ipynb	11	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Liver_IFN_Pira2_proximity.R	Liver_IFN_Pira2_proximity.ipynb	5	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Liver_IFN_Pira2_proximity.R	Liver_IFN_Pira2_proximity.ipynb	19	selected original analysis or annotation rule	source inspected; not re-executed
+source_evidence/Heart_preprocessing.R	Heart_normalize.ipynb	14	QC, normalization, final cluster selection	source inspected; not re-executed
+source_evidence/Heart_preprocessing.R	Heart_normalize.ipynb	17	QC, normalization, final cluster selection	source inspected; not re-executed
+source_evidence/Heart_preprocessing.R	Heart_normalize.ipynb	30	QC, normalization, final cluster selection	source inspected; not re-executed
+source_evidence/Muscle_preprocessing.R	Muscle_normalize.ipynb	13	QC, normalization, final cluster selection	source inspected; not re-executed
+source_evidence/Muscle_preprocessing.R	Muscle_normalize.ipynb	16	QC, normalization, final cluster selection	source inspected; not re-executed
+source_evidence/Muscle_preprocessing.R	Muscle_normalize.ipynb	28	QC, normalization, final cluster selection	source inspected; not re-executed
+source_evidence/Adipose_preprocessing.R	Adipose_normalize.ipynb	14	QC, normalization, final cluster selection	source inspected; not re-executed
+source_evidence/Adipose_preprocessing.R	Adipose_normalize.ipynb	16	QC, normalization, final cluster selection	source inspected; not re-executed
+source_evidence/Adipose_preprocessing.R	Adipose_normalize.ipynb	27	QC, normalization, final cluster selection	source inspected; not re-executed
+source_evidence/Liver_preprocessing.R	Liver_normalize.ipynb	13	QC, normalization, final cluster selection	source inspected; not re-executed
+source_evidence/Liver_preprocessing.R	Liver_normalize.ipynb	14	QC, normalization, final cluster selection	source inspected; not re-executed
+source_evidence/Liver_preprocessing.R	Liver_normalize.ipynb	26	QC, normalization, final cluster selection	source inspected; not re-executed

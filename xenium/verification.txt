@@ -1,0 +1,23 @@
+Manifest validated: 8 organ-age samples; 6 default samples across 3 organs.
+Provenance paths validated; all selected source cells exist and contain no saved error output.
+Original source notebook hashes captured in source_inventory.tsv.
+No biological analysis or source notebooks executed.
+R syntax parse exit: 0
+PARSE_OK NatureAging_Transcriptomic_Code/xenium/proximity_functions.R 
+PARSE_OK NatureAging_Transcriptomic_Code/xenium/run_xenium.R 
+
+During startup - Warning messages:
+1: Setting LC_CTYPE failed, using "C" 
+2: Setting LC_COLLATE failed, using "C" 
+3: Setting LC_TIME failed, using "C" 
+4: Setting LC_MESSAGES failed, using "C" 
+5: Setting LC_MONETARY failed, using "C" 
+
+Synthetic test exit: 0
+PASS: all-cell cutoff, organ-specific rule, age-restricted neighbors, observed differences, default no CI, bootstrap reproducibility.
+During startup - Warning messages:
+1: Setting LC_CTYPE failed, using "C" 
+2: Setting LC_COLLATE failed, using "C" 
+3: Setting LC_TIME failed, using "C" 
+4: Setting LC_MESSAGES failed, using "C" 
+5: Setting LC_MONETARY failed, using "C" 

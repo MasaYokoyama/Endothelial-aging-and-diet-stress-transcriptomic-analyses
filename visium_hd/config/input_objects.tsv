@@ -1,0 +1,8 @@
+input	class	required_contents	origin	status
+reference_rctd_heart.rds	spacexr Reference	gene-symbol raw counts; cell_types; nUMI	Heart reference: Tabula Muris Senis + present-study scRNA-seq	present
+heart_mergeobj_preProject_full_sketchHarmony.rds	Seurat	RNA raw ENSMUSG counts; sample; nCount_RNA; cluster_full; Harmony reductions	01_heart_preprocess	present
+heart_mergeobj_preProject_full_sketchHarmony_ENSMUSG16kept.rds	Seurat	RNA BioMart-renamed genes; unmatched ENSMUSG retained; make.unique suffixes	Heart combined object_Gene symbol conversion.ipynb	present
+adipose_merged_obj_reference.rds	Seurat	RNA/SCT; Cellname; PCA/Harmony; three reference sources per response	Tabula Muris Senis adipose/gonadal + PRJDB17809; SCT/glmGamPoi/Harmony	present
+adipose_mergeobj_preProject_sketchHarmony.fixed_onDiskPath_joinCounts.rds	Seurat	RNA with readable BPCells paths and joined counts; harmony	Adipose_Combination_4 cells 1–27; disk repair depended on original mount	present
+adipose_mergeobj_sketchHarmony_SCT_labelTransferred_k50_r020_Naming_260220.rds	Seurat	RNA/SCT; Cellname_final; clusters_k50_r020; Merged_cellname; sample	08_adipose_curation	present
+*_norm_Aging1Score.rds	Seurat	Aging_1_Score1; Aging1_nbhd100um; Merged_cellname; image coordinates (heart) or centroid_x/y (adipose)	Heart/Adipose Combination_6/7 neighborhood notebooks	see samples.tsv

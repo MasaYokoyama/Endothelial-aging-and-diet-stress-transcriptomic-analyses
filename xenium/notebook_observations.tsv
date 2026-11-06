@@ -1,0 +1,17 @@
+notebook	cell_1based	quantity	saved_text	status
+Heart_IFN_Pira2_proximity.ipynb	62	pooled_all_cell_Bst2_q90	"    90% 
+2.89075 "	Saved notebook output; not recomputed
+Adipose_IFN_Pira2_proximity.ipynb	17	pooled_all_cell_Bst2_q90_and_positivity	"     90% 
+3.147239 
+Young_Bst2_positive_pct  Aged_Bst2_positive_pct 
+               8.763058               13.620850 "	Saved notebook output; not recomputed
+Muscle_IFN_Pira2_proximity.ipynb	18	pooled_all_cell_Bst2_distribution	"   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.0000  0.0000  0.0000  0.2129  0.0000  6.8135 
+      0%      50%      75%      90%      95%      99%     100% 
+0.000000 0.000000 0.000000 0.000000 2.953963 4.418446 6.813544 
+
+FALSE  TRUE 
+68954  4113 
+[1] 5.62908"	Saved notebook output; not recomputed
+Liver_IFN_Pira2_proximity.ipynb	19	pooled_all_cell_Bst2_q90	"    90% 
+3.58937 "	Saved notebook output; not recomputed

@@ -1,0 +1,154 @@
+organ	mapping_name	cluster	label	source_notebook	source_cell_1based	note
+Heart	cluster_annotation	0	Endothelial-containing segment	Heart_normalize_naming.ipynb	17	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Heart	cluster_annotation	1	Ventricular cardiomyocyte-rich	Heart_normalize_naming.ipynb	17	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Heart	cluster_annotation	2	Endothelial-containing segment	Heart_normalize_naming.ipynb	17	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Heart	cluster_annotation	3	Ventricular cardiomyocyte-rich	Heart_normalize_naming.ipynb	17	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Heart	cluster_annotation	4	Endothelial-containing segment	Heart_normalize_naming.ipynb	17	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Heart	cluster_annotation	5	Pericyte-rich	Heart_normalize_naming.ipynb	17	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Heart	cluster_annotation	6	Hematopoietic cell	Heart_normalize_naming.ipynb	17	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Heart	cluster_annotation	7	Fibroblast-rich	Heart_normalize_naming.ipynb	17	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Heart	cluster_annotation	8	Macrophage-EC mixed	Heart_normalize_naming.ipynb	17	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Heart	cluster_annotation	9	Endothelial-containing segment	Heart_normalize_naming.ipynb	17	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Heart	cluster_annotation	10	Ventricular cardiomyocyte-rich	Heart_normalize_naming.ipynb	17	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Heart	cluster_annotation	11	Atrial cardiomyocyte-rich	Heart_normalize_naming.ipynb	17	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Heart	cluster_annotation	12	Stromal-EC mixed	Heart_normalize_naming.ipynb	17	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Heart	cluster_annotation	13	VSMC-rich	Heart_normalize_naming.ipynb	17	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Heart	cluster_annotation	14	Fibroblast-rich	Heart_normalize_naming.ipynb	17	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Heart	cluster_annotation	15	Macrophage-stromal mixed	Heart_normalize_naming.ipynb	17	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Heart	cluster_annotation	16	Venous-like large-vessel EC-rich	Heart_normalize_naming.ipynb	17	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Heart	cluster_annotation	17	Endothelial-containing segment	Heart_normalize_naming.ipynb	17	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Heart	cluster_annotation	18	Arterial-associated mural/VSMC-rich	Heart_normalize_naming.ipynb	17	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Heart	cluster_annotation	19	Venous-like large-vessel EC-rich	Heart_normalize_naming.ipynb	17	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Heart	cluster_annotation	20	Adipocyte-rich	Heart_normalize_naming.ipynb	17	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Heart	cluster_annotation	21	Hematopoietic cell	Heart_normalize_naming.ipynb	17	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Heart	cluster_annotation	22	Valve-associated fibroblast-rich	Heart_normalize_naming.ipynb	17	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Heart	cluster_annotation	23	Cardiomyocyte-glial mixed	Heart_normalize_naming.ipynb	17	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Heart	cluster_annotation	24	Epicardial/mesothelial-rich	Heart_normalize_naming.ipynb	17	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Heart	cluster_annotation	25	Lymphatic endothelial-rich	Heart_normalize_naming.ipynb	17	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Heart	cluster_annotation	26	Ventricular cardiomyocyte-rich	Heart_normalize_naming.ipynb	17	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Heart	cluster_annotation	27	Pericyte-rich	Heart_normalize_naming.ipynb	17	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Heart	cluster_annotation	28	Schwann/glial-rich	Heart_normalize_naming.ipynb	17	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Heart	cluster_annotation	29	Endothelial-containing segment	Heart_normalize_naming.ipynb	17	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_cluster_annotation	0	Skeletal muscle-rich	Muscle_normalize_naming.ipynb	14	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_cluster_annotation	1	Endothelial-containing segment	Muscle_normalize_naming.ipynb	14	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_cluster_annotation	2	Adventitial fibroblast-rich	Muscle_normalize_naming.ipynb	14	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_cluster_annotation	3	Endothelial-containing segment	Muscle_normalize_naming.ipynb	14	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_cluster_annotation	4	Skeletal muscle-rich	Muscle_normalize_naming.ipynb	14	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_cluster_annotation	5	Skeletal muscle-rich	Muscle_normalize_naming.ipynb	14	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_cluster_annotation	6	Skeletal muscle-rich	Muscle_normalize_naming.ipynb	14	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_cluster_annotation	7	Skeletal muscle-rich	Muscle_normalize_naming.ipynb	14	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_cluster_annotation	8	Hematopoietic cell	Muscle_normalize_naming.ipynb	14	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_cluster_annotation	9	Pericyte-rich	Muscle_normalize_naming.ipynb	14	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_cluster_annotation	10	ECM-rich fibroblast	Muscle_normalize_naming.ipynb	14	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_cluster_annotation	11	Skeletal muscle-rich	Muscle_normalize_naming.ipynb	14	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_cluster_annotation	12	Skeletal muscle-rich	Muscle_normalize_naming.ipynb	14	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_cluster_annotation	13	Adventitial fibroblast-rich	Muscle_normalize_naming.ipynb	14	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_cluster_annotation	14	Endothelial-containing segment	Muscle_normalize_naming.ipynb	14	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_cluster_annotation	15	Large-vessel EC-rich	Muscle_normalize_naming.ipynb	14	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_cluster_annotation	16	Hematopoietic cell	Muscle_normalize_naming.ipynb	14	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_cluster_annotation	17	Hematopoietic cell	Muscle_normalize_naming.ipynb	14	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_cluster_annotation	18	Schwann/glial-rich	Muscle_normalize_naming.ipynb	14	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_cluster_annotation	19	Skeletal muscle-epithelial mixed	Muscle_normalize_naming.ipynb	14	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_cluster_annotation	20	VSMC-rich	Muscle_normalize_naming.ipynb	14	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_cluster_annotation	21	ECM-rich fibroblast	Muscle_normalize_naming.ipynb	14	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_cluster_annotation	22	Muscle spindle-associated muscle-rich	Muscle_normalize_naming.ipynb	14	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_cluster_annotation	23	Mesothelial/epithelial-rich	Muscle_normalize_naming.ipynb	14	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_cluster_annotation	24	Adipocyte-rich	Muscle_normalize_naming.ipynb	14	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_cluster_annotation	25	Skeletal muscle-rich	Muscle_normalize_naming.ipynb	14	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_cluster_annotation	26	Lymphatic endothelial-rich	Muscle_normalize_naming.ipynb	14	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_cluster_annotation	27	Skeletal muscle-rich	Muscle_normalize_naming.ipynb	14	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_hema_annotation	0	Monocyte/macrophage lineage	Muscle_normalize_naming.ipynb	22	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_hema_annotation	1	Macrophage-fibroblast mixed	Muscle_normalize_naming.ipynb	22	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_hema_annotation	2	Macrophage-muscle mixed	Muscle_normalize_naming.ipynb	22	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_hema_annotation	3	Macrophage-endothelial mixed	Muscle_normalize_naming.ipynb	22	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_hema_annotation	4	Monocyte/macrophage lineage	Muscle_normalize_naming.ipynb	22	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_hema_annotation	5	Macrophage-muscle mixed	Muscle_normalize_naming.ipynb	22	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_hema_annotation	6	Macrophage-muscle mixed	Muscle_normalize_naming.ipynb	22	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_hema_annotation	7	Trem2-enriched macrophage	Muscle_normalize_naming.ipynb	22	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_hema_annotation	8	DC-associated	Muscle_normalize_naming.ipynb	22	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_hema_annotation	9	Macrophage-muscle mixed	Muscle_normalize_naming.ipynb	22	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_hema_annotation	10	Hematopoietic-associated mixed	Muscle_normalize_naming.ipynb	22	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_hema_annotation	11	Macrophage-vascular/mural mixed	Muscle_normalize_naming.ipynb	22	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Muscle	muscle_hema_annotation	12	Macrophage-adipocyte mixed	Muscle_normalize_naming.ipynb	22	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_cluster_annotation	0	Endothelial-containing segment	Adipose_normalize_naming.ipynb	8	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_cluster_annotation	1	Adipocyte-rich	Adipose_normalize_naming.ipynb	8	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_cluster_annotation	2	Fibroblast-rich	Adipose_normalize_naming.ipynb	8	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_cluster_annotation	3	Mesothelial cell-rich	Adipose_normalize_naming.ipynb	8	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_cluster_annotation	4	Endothelial-containing segment	Adipose_normalize_naming.ipynb	8	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_cluster_annotation	5	Adipocyte-rich	Adipose_normalize_naming.ipynb	8	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_cluster_annotation	6	Pericyte-rich	Adipose_normalize_naming.ipynb	8	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_cluster_annotation	7	Hematopoietic cell	Adipose_normalize_naming.ipynb	8	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_cluster_annotation	8	Hematopoietic cell	Adipose_normalize_naming.ipynb	8	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_cluster_annotation	9	Fibroblast-rich	Adipose_normalize_naming.ipynb	8	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_cluster_annotation	10	Endothelial-containing segment	Adipose_normalize_naming.ipynb	8	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_cluster_annotation	11	Adipocyte-rich	Adipose_normalize_naming.ipynb	8	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_cluster_annotation	12	Large-vessel EC-rich	Adipose_normalize_naming.ipynb	8	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_cluster_annotation	13	Hematopoietic cell	Adipose_normalize_naming.ipynb	8	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_cluster_annotation	14	VSMC-rich	Adipose_normalize_naming.ipynb	8	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_cluster_annotation	15	Fibroblast-rich	Adipose_normalize_naming.ipynb	8	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_cluster_annotation	16	Hematopoietic cell	Adipose_normalize_naming.ipynb	8	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_cluster_annotation	17	Mixed segment	Adipose_normalize_naming.ipynb	8	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_cluster_annotation	18	Endothelial-containing segment	Adipose_normalize_naming.ipynb	8	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_cluster_annotation	19	Hematopoietic cell	Adipose_normalize_naming.ipynb	8	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_cluster_annotation	20	Fibroblast-rich	Adipose_normalize_naming.ipynb	8	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_cluster_annotation	21	Lymphatic endothelial-rich	Adipose_normalize_naming.ipynb	8	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_cluster_annotation	22	Adipocyte-rich	Adipose_normalize_naming.ipynb	8	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_cluster_annotation	23	Adipocyte-rich	Adipose_normalize_naming.ipynb	8	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_hema_annotation	0	Monocyte/macrophage lineage	Adipose_normalize_naming.ipynb	24	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_hema_annotation	1	Monocyte/macrophage lineage	Adipose_normalize_naming.ipynb	24	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_hema_annotation	2	Macrophage-adipocyte mixed	Adipose_normalize_naming.ipynb	24	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_hema_annotation	3	T cell lineage	Adipose_normalize_naming.ipynb	24	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_hema_annotation	4	pDC-like	Adipose_normalize_naming.ipynb	24	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_hema_annotation	5	DC-associated	Adipose_normalize_naming.ipynb	24	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_hema_annotation	6	B cell lineage	Adipose_normalize_naming.ipynb	24	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_hema_annotation	7	Macrophage-mural/vascular mixed	Adipose_normalize_naming.ipynb	24	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_hema_annotation	8	Macrophage-endothelial mixed	Adipose_normalize_naming.ipynb	24	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_hema_annotation	9	Monocyte/macrophage lineage	Adipose_normalize_naming.ipynb	24	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_hema_annotation	10	Macrophage-fibroblast mixed	Adipose_normalize_naming.ipynb	24	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_hema_annotation	11	Macrophage-adipocyte mixed	Adipose_normalize_naming.ipynb	24	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_hema_annotation	12	Macrophage-mural/vascular mixed	Adipose_normalize_naming.ipynb	24	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_hema_annotation	13	B cell lineage	Adipose_normalize_naming.ipynb	24	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_hema_annotation	14	Monocyte/macrophage lineage	Adipose_normalize_naming.ipynb	24	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Adipose	adipose_hema_annotation	15	Macrophage-mesothelial mixed	Adipose_normalize_naming.ipynb	24	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_cluster_annotation	0	Hepatocyte-rich	Liver_normalize_naming.ipynb	16	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_cluster_annotation	1	Hepatocyte-rich	Liver_normalize_naming.ipynb	16	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_cluster_annotation	2	Hepatocyte-rich	Liver_normalize_naming.ipynb	16	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_cluster_annotation	3	Hepatocyte-rich	Liver_normalize_naming.ipynb	16	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_cluster_annotation	4	Hepatocyte-rich	Liver_normalize_naming.ipynb	16	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_cluster_annotation	5	LSEC-rich	Liver_normalize_naming.ipynb	16	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_cluster_annotation	6	Kupffer cell	Liver_normalize_naming.ipynb	16	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_cluster_annotation	7	Hepatocyte-rich	Liver_normalize_naming.ipynb	16	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_cluster_annotation	8	LSEC-rich	Liver_normalize_naming.ipynb	16	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_cluster_annotation	9	Hepatic stellate cell-rich	Liver_normalize_naming.ipynb	16	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_cluster_annotation	10	Hepatocyte-rich	Liver_normalize_naming.ipynb	16	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_cluster_annotation	11	Kupffer-LSEC mixed	Liver_normalize_naming.ipynb	16	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_cluster_annotation	12	Hepatocyte-rich	Liver_normalize_naming.ipynb	16	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_cluster_annotation	13	Hepatocyte-rich	Liver_normalize_naming.ipynb	16	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_cluster_annotation	14	Hepatocyte-rich	Liver_normalize_naming.ipynb	16	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_cluster_annotation	15	Cholangiocyte	Liver_normalize_naming.ipynb	16	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_cluster_annotation	16	Hematopoietic cell	Liver_normalize_naming.ipynb	16	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_cluster_annotation	17	Hepatic stellate cell-rich	Liver_normalize_naming.ipynb	16	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_cluster_annotation	18	Large-vessel EC-rich	Liver_normalize_naming.ipynb	16	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_cluster_annotation	19	Hematopoietic cell	Liver_normalize_naming.ipynb	16	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_cluster_annotation	20	Endothelial-containing mixed	Liver_normalize_naming.ipynb	16	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_cluster_annotation	21	Mesothelial-hepatocyte mixed	Liver_normalize_naming.ipynb	16	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_cluster_annotation	22	VSMC-rich	Liver_normalize_naming.ipynb	16	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_cluster_annotation	23	IFN-responsive hepatocyte-rich	Liver_normalize_naming.ipynb	16	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_cluster_annotation	24	Mesothelial cell	Liver_normalize_naming.ipynb	16	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_hema_annotation	0	Hepatic stellate cell-rich	Liver_normalize_naming.ipynb	35	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_hema_annotation	1	T cell lineage	Liver_normalize_naming.ipynb	35	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_hema_annotation	2	T cell lineage	Liver_normalize_naming.ipynb	35	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_hema_annotation	3	Macrophage lineage	Liver_normalize_naming.ipynb	35	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_hema_annotation	4	B cell lineage	Liver_normalize_naming.ipynb	35	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_hema_annotation	5	DC-associated	Liver_normalize_naming.ipynb	35	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_hema_annotation	6	DC-associated	Liver_normalize_naming.ipynb	35	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_hema_annotation	7	T cell lineage	Liver_normalize_naming.ipynb	35	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_hema_annotation	8	Macrophage lineage	Liver_normalize_naming.ipynb	35	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_hema_annotation	9	Macrophage lineage	Liver_normalize_naming.ipynb	35	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_hema_annotation	10	pDC-like	Liver_normalize_naming.ipynb	35	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_hema_annotation	11	Neutrophil	Liver_normalize_naming.ipynb	35	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_hema_annotation	12	Lymphatic endothelial-rich	Liver_normalize_naming.ipynb	35	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_hema_annotation	13	Macrophage lineage	Liver_normalize_naming.ipynb	35	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_hema_annotation	14	Hepatocyte-rich	Liver_normalize_naming.ipynb	35	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_hema_annotation	15	Schwann/glial-rich	Liver_normalize_naming.ipynb	35	Base cluster label; apply per-cell refinements documented in annotation_rules.md
+Liver	liver_hema_annotation	16	Portal/adventitial fibroblast-rich	Liver_normalize_naming.ipynb	35	Base cluster label; apply per-cell refinements documented in annotation_rules.md
